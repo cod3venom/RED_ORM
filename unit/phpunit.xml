@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+        backupGlobals="false"
+        backupStaticAttributes="false"
+        bootstrap="../vendor/autoload.php"
+        colors="true"
+        convertErrorsToExceptions="true"
+        convertNoticesToExceptions="true"
+        convertWarningsToExceptions="true"
+        processIsolation="false"
+        stopOnFailure="false"
+>
+    <testsuites>
+        <testsuite name="annotation-parser">
+            <directory suffix=".php">./annotation_parser_test/</directory>
+        </testsuite>
+
+        <testsuite name="query-builder">
+            <directory suffix=".php">./query_builder_tests/</directory>
+        </testsuite>
+
+        <testsuite name="class-parser">
+            <directory suffix=".php">./class-parser/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>

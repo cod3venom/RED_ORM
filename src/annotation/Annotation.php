@@ -14,7 +14,7 @@ use src\annotation\dto\TableAnnotationTObject;
 use src\annotation\dto\TablePackageAnnotationTObject;
 use src\annotation\helpers\AnnotationsParser;
 
-class RedAnnotation
+class Annotation
 {
     /** examples
      * @table(name=users)

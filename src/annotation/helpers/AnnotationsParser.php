@@ -50,8 +50,9 @@ class AnnotationsParser
         preg_match($this->regex, $annotation, $matches);
         if (count($matches) === 0 ) {
             $annotation = "";
+        } else {
+            $annotation = (string)$matches[0];
         }
-        $annotation = (string)$matches[0];
         $annotation = str_replace("/", "", $annotation);
         $annotation = str_replace("*", "", $annotation);
         $annotation = str_replace("(", "#", $annotation);
@@ -65,7 +66,7 @@ class AnnotationsParser
         if (count($splitOnHashTag) < 2){
             return ["header"=>"", "body"=>[]];
         }
-        $annotationType = (string)$splitOnHashTag[0];
+        $annotationType = trim((string)$splitOnHashTag[0]);
         $annotationBody = (string)$splitOnHashTag[1];
         return ["header"=>$annotationType, "body"=>$annotationBody];
     }

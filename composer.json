@@ -3,6 +3,6 @@
     "psr-4": {"src\\": "src/"}
   },
   "require": {
-    "phpunit/phpunit": "9.5.10"
+    "phpunit/phpunit": "9.5.10",
   }
 }
