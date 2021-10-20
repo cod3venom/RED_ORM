@@ -13,6 +13,7 @@ use src\annotation\dto\ColumnAnnotationTObject;
 use src\annotation\dto\TableAnnotationTObject;
 use src\annotation\dto\TablePackageAnnotationTObject;
 use src\annotation\helpers\AnnotationsParser;
+use src\annotation\helpers\ReflectionParser;
 
 class Annotation
 {
@@ -49,6 +50,12 @@ class Annotation
             }
         }
         return new TablePackageAnnotationTObject($table, $columnObjs);
+    }
+
+    public static function ParseClass(string $className): TablePackageAnnotationTObject
+    {
+        $reflectionParser = new ReflectionParser($className);
+        return self::ParseAnnotations($reflectionParser->getAllDocs());
     }
 
 }

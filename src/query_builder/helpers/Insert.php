@@ -42,6 +42,8 @@ class Insert extends AbstractResource
      * @param array $columns
      */
     public function __construct(array $columns) {
+        parent::__construct();
+
         $this->columns = $columns;
         $this->stb = new StringBuilder();
     }

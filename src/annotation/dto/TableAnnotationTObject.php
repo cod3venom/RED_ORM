@@ -11,7 +11,7 @@ namespace src\annotation\dto;
 
 class TableAnnotationTObject
 {
-    public string $name;
+    public string $name = "";
     public function __construct(string $name)
     {
         $this->name = $name;

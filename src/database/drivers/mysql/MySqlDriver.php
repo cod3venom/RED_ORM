@@ -9,11 +9,13 @@
 
 namespace src\database\drivers\mysql;
 
+use mysqli_result;
+use mysqli_sql_exception;
 use mysqli_stmt;
-use src\database\drivers\AbstractDriver;
 use src\database\helpers\DotEnvDBCredentials;
+use src\query_builder\QueryBuilder;
 
-class MySqlDriver extends AbstractDriver
+class MySqlDriver
 {
 
     const DRIVER_NAME = "MYSQLI";
@@ -33,8 +35,8 @@ class MySqlDriver extends AbstractDriver
                 $mysqliCredentials->getDbName()
             );
         }
-        catch (\mysqli_sql_exception $ex){
-            throw new \mysqli_sql_exception(sprintf("[%s] Unable to connect mysql database, please check credentials", self::DRIVER_NAME));
+        catch (mysqli_sql_exception $ex){
+            throw new mysqli_sql_exception(sprintf("[%s] Unable to connect mysql database, please check credentials", self::DRIVER_NAME));
         }
     }
 
@@ -46,16 +48,16 @@ class MySqlDriver extends AbstractDriver
     public function create_stmt(string $query): MySqlDriver
     {
         if (!$this->connection){
-            throw new \mysqli_sql_exception(sprintf("[%s] Unable to connect mysql database, please check credentials", self::DRIVER_NAME));
+            throw new mysqli_sql_exception(sprintf("[%s] Unable to connect mysql database, please check credentials", self::DRIVER_NAME));
         }
 
         if (empty($query)){
-            throw new \mysqli_sql_exception(sprintf("[%s] Mysql query can't be empty", self::DRIVER_NAME));
+            throw new mysqli_sql_exception(sprintf("[%s] Mysql query can't be empty", self::DRIVER_NAME));
         }
 
         $this->stmt = mysqli_stmt_init($this->connection);
         if(!$this->stmt->prepare($query)) {
-            throw new \mysqli_sql_exception(sprintf("[%s] Can't prepare mysql query", self::DRIVER_NAME));
+            throw new mysqli_sql_exception(sprintf("[%s] Can't prepare mysql query", self::DRIVER_NAME));
         }
 
         $this->stmt->prepare($query);
@@ -93,11 +95,11 @@ class MySqlDriver extends AbstractDriver
      */
     public function store(): array{
         if (!$this->stmt){
-            throw new \mysqli_sql_exception(sprintf("[%s] statement is null", self::DRIVER_NAME));
+            throw new mysqli_sql_exception(sprintf("[%s] statement is null", self::DRIVER_NAME));
         }
         $execution = $this->stmt->execute();
         if (!$execution){
-            throw new \mysqli_sql_exception(sprintf("[%s] Unable to execute stmt procedures", self::DRIVER_NAME));
+            throw new mysqli_sql_exception(sprintf("[%s] Unable to execute stmt procedures", self::DRIVER_NAME));
         }
 
         return (array)$this->stmt->store_result();
@@ -105,15 +107,15 @@ class MySqlDriver extends AbstractDriver
 
     /**
      * Select data
-     * @return false|\mysqli_result
+     * @return false|mysqli_result
      */
-    public function select(){
+    public function selectData(){
         if (!$this->stmt){
-            throw new \mysqli_sql_exception(sprintf("[%s] statement is null", self::DRIVER_NAME));
+            throw new mysqli_sql_exception(sprintf("[%s] statement is null", self::DRIVER_NAME));
         }
         $execution = $this->stmt->execute();
         if (!$execution){
-            throw new \mysqli_sql_exception(sprintf("[%s] Unable to execute stmt procedures",self::DRIVER_NAME));
+            throw new mysqli_sql_exception(sprintf("[%s] Unable to execute stmt procedures",self::DRIVER_NAME));
         }
 
         return $this->stmt->get_result();
@@ -123,12 +125,12 @@ class MySqlDriver extends AbstractDriver
      * Delete data
      * @return bool
      */
-    public function delete(): bool{
+    public function deleteData(): bool{
         if (!$this->stmt){
-            throw new \mysqli_sql_exception(sprintf("[%s] statement is null", self::DRIVER_NAME));
+            throw new mysqli_sql_exception(sprintf("[%s] statement is null", self::DRIVER_NAME));
         }
         if (!$this->stmt->execute()){
-            throw new \mysqli_sql_exception(sprintf("[%s] Unable to execute stmt procedures",self::DRIVER_NAME));
+            throw new mysqli_sql_exception(sprintf("[%s] Unable to execute stmt procedures",self::DRIVER_NAME));
         }
 
         return (bool)$this->stmt->execute();
@@ -142,10 +144,10 @@ class MySqlDriver extends AbstractDriver
      */
     public function count(): int {
         if (!$this->stmt){
-            throw new \mysqli_sql_exception(sprintf("[%s] statement is null", self::DRIVER_NAME));
+            throw new mysqli_sql_exception(sprintf("[%s] statement is null", self::DRIVER_NAME));
         }
         if (!$this->stmt->execute()){
-            throw new \mysqli_sql_exception(sprintf("[%s] Unable to execute stmt procedures",self::DRIVER_NAME));
+            throw new mysqli_sql_exception(sprintf("[%s] Unable to execute stmt procedures",self::DRIVER_NAME));
         }
 
         $this->stmt->execute();

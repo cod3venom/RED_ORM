@@ -22,6 +22,8 @@ class Select extends AbstractResource
     private StringBuilder $stb;
 
     public function __construct(array $columns) {
+        parent::__construct();
+
         $this->columns = $columns;
         $this->stb = new StringBuilder();
     }

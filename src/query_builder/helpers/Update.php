@@ -22,6 +22,8 @@ class Update extends AbstractResource
 
     public function __construct(string $table)
     {
+        parent::__construct();
+        
         $this->table = $table;
         $this->stb = new StringBuilder();
     }

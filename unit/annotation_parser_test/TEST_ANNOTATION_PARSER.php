@@ -97,16 +97,9 @@ class TEST_ANNOTATION_PARSER extends TestCase
     }
 
     public function testRealClassModel(){
-        $reflection = new \ReflectionClass(UserProfile::class);
-        $comments = [$reflection->getDocComment()];
-        foreach ($reflection->getProperties() as $property) {
-            if (!($property instanceof \ReflectionProperty)) {
-                continue;
-            }
-            $comments[] = $property->getDocComment();
-        }
 
-        $data = Annotation::ParseAnnotations($comments);
+        $data = Annotation::ParseClass(UserProfile::class);
+
 
         $this->assertEquals("USER_PROFILE", $data->tableAnnotationTObject->name);
         $columns = array_map(

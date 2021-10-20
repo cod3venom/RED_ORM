@@ -10,20 +10,28 @@
 namespace src\test_models;
 
 /**
- * @Table (name=USER_PROFILE);
+ * @Table (name=user_profile);
  */
 class UserProfile{
     /**
      * User profile id
-     * @Column (name=ID, type=int, nullable=false);
+     * @Column (name=ID, type=int, auto_generated=true, nullable=false);
      * @var int
      */
-    protected int $id;
+    public int $id;
 
     /**
      * User profile email address
-     * @Column (name=USER_EMAIL, type=string, nullable=false);
+     * @Column (name=EMAIL, type=string, nullable=false);
      * @var string
      */
-    protected string $userEmail;
+    public string $userEmail;
+
+
+    /**
+     * User status
+     * @Column (name=STATUS, type=string, nullable=true);
+     * @var string
+     */
+    public string $userStatus;
 }

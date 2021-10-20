@@ -9,10 +9,22 @@
 
 namespace src\query_builder\helpers;
 
+use mysqli_stmt;
+use src\database\drivers\mysql\MySqlDriver;
 use src\query_builder\helpers\abstractions\Where;
 
-abstract class AbstractResource
+abstract class AbstractResource extends MySqlDriver
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function getDriver(): MySqlDriver
+    {
+        return $this;
+    }
+
     public function __Where(string $sql): Where
     {
         $whereObj = new Where();
